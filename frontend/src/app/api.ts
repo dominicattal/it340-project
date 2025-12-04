@@ -4,5 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class Api {
-  
+  log(msg: any)   { console.log(msg); }
+  error(msg: any) { console.error(msg); }
+  warn(msg: any)  { console.warn(msg); }
 }
