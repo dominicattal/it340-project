@@ -1,10 +1,13 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Api {
-  log(msg: any)   { console.log(msg); }
-  error(msg: any) { console.error(msg); }
-  warn(msg: any)  { console.warn(msg); }
+  constructor(private http: HttpClient) { }
+  test() {
+    return this.http.get(`${environment.apiUrl}/test`)
+  }
 }

@@ -7,6 +7,10 @@ function validateUsername(username) {
     return true;
 }
 
+router.get('/test', async (req, res) => {
+    res.status(200).json({message: "hello world"})
+})
+
 router.post('/register', async (req, res) => {    
     try {
         const username = req.body["username"]
