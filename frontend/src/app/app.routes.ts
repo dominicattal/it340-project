@@ -3,6 +3,10 @@ import { Login } from './login/login';
 import { Register } from './register/register';
 import { Home } from './home/home';
 import { Test } from './test/test';
+import { Kits } from './kits/kits';
+import { Paints } from './paints/paints';
+import { Tools } from './tools/tools';
+
 
 export const routes: Routes = [
     {
@@ -25,5 +29,17 @@ export const routes: Routes = [
     {
         path: 'test',
         component: Test
+    },
+    {
+        path: 'kits',
+        component: Kits
+    },
+    {
+        path: 'paints',
+        component: Paints
+    },
+    {
+        path: 'tools',
+        component: Tools
     }
 ];
