@@ -6,6 +6,7 @@ import { Test } from './test/test';
 import { Kits } from './kits/kits';
 import { Paints } from './paints/paints';
 import { Tools } from './tools/tools';
+import { Profile } from './profile/profile';
 
 
 export const routes: Routes = [
@@ -41,5 +42,9 @@ export const routes: Routes = [
     {
         path: 'tools',
         component: Tools
+    },
+    {
+        path: 'profile',
+        component: Profile
     }
 ];
