@@ -34,7 +34,8 @@ router.post('/register', async (req, res) => {
     }
 })
 
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
+    console.log(req.body)
     try {
         const username = req.body["username"]
         const password = req.body["password"]
@@ -42,19 +43,20 @@ router.get('/login', async (req, res) => {
         if (!user) {
             res.status(200).json({
                 "found": false,
-                "message": "user already exists"
+                "message": "user not found"
             })
             return 
         }
         if (user["password"] != password) {
             res.status(200).json({
                 "found": false,
-                "message": "user already exists"
+                "message": "incorrect password"
             })
             return
         }
         res.status(200).json({
             "found": true,
+            "message": "success",
             "username": username,
         })
     } catch (error) {

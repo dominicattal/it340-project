@@ -19,6 +19,7 @@ const generateHash = (string: string) => {
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './register.html',
   styleUrl: './register.css',
+  providers: [CookieService]
 })
 export class Register {
   constructor(private api : Api, 
@@ -37,6 +38,8 @@ export class Register {
       next: (res: any) => {
         console.log("response", res)
         if (res["created"]) {
+          this.cookieService.set('loggedIn', 'true')
+          this.cookieService.set('username', this.name)
           this.router.navigate(['/home'])
         } else {
           this.output = res["message"]
