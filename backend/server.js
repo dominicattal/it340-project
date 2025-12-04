@@ -1,11 +1,24 @@
-const express = require('express');
+const express = require('express')
+const dotenv = require('dotenv')
+dotenv.config()
 const app = express();
-const port = 3000;
+const mongoose = require('mongoose')
+const routes = require('./routes/routes.js')
 
-app.get('/', (req, res) => {
-    res.send('Hello MEAN Stack!');
-});
+app.use(express.json())
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+app.use((req, res, next)=> {
+    console.log(req.path, req.method)
+    next()
+})
+
+app.use('/api', routes)
+mongoose.connect(process.env.MONGODB_URI)
+    .then(()=>{
+        app.listen(process.env.PORT, () => {
+            console.log(`Listening on port ${process.env.PORT}`)
+        })
+    })
+    .catch((error) => {
+        console.log(error)
+    })
