@@ -23,7 +23,11 @@
         <li class="nav-item">
           <a class="nav-link active" href="tools">Tools</a>
         </li>
-
+        @if (isLoggedIn) {
+          <li class="nav-item">
+            <a class="nav-link active" href="profile">Profile</a>
+          </li>
+        }
       </ul>
       <form class="d-flex my-2 my-lg-0">
         <input class="form-control me-sm-2" type="text" placeholder="Search" />
@@ -31,12 +35,18 @@
           Search
         </button>
       </form>
-      <button class="btn btn-outline-primary ms-3">
-        <a class="nav-link active" href="login">Login</a>
-      </button>
-      <button class="btn btn-outline-primary ms-3">
-        <a class="nav-link active" href="register">Register</a>
-      </button>
+      @if (!isLoggedIn) {
+        <button class="btn btn-outline-primary ms-3">
+          <a class="nav-link active" href="login">Login</a>
+        </button>
+        <button class="btn btn-outline-primary ms-3">
+          <a class="nav-link active" href="register">Register</a>
+        </button>
+      } @else {
+        <button class="btn btn-outline-primary ms-3">
+          <a class="nav-link active" href="logout">Logout</a>
+        </button>
+      }
     </div>
   </div>
 </nav>

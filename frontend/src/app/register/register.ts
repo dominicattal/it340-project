@@ -39,7 +39,7 @@ export class Register {
         console.log("response", res)
         if (res["created"]) {
           this.cookieService.set('loggedIn', 'true')
-          this.cookieService.set('username', this.name)
+          this.cookieService.set('username',this.name)
           this.router.navigate(['/home'])
         } else {
           this.output = res["message"]

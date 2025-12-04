@@ -7,6 +7,7 @@ import { Kits } from './kits/kits';
 import { Paints } from './paints/paints';
 import { Tools } from './tools/tools';
 import { Profile } from './profile/profile';
+import { Logout } from './logout/logout';
 
 
 export const routes: Routes = [
@@ -46,5 +47,9 @@ export const routes: Routes = [
     {
         path: 'profile',
         component: Profile
+    },
+    {
+        path: 'logout',
+        component: Logout
     }
 ];
