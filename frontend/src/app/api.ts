@@ -10,4 +10,11 @@ export class Api {
   test() {
     return this.http.get(`${environment.apiUrl}/test`)
   }
+  registerUser(username: any, password: any) {
+    console.log("AAA")
+    return this.http.post(
+      `${environment.apiUrl}/register`,
+      {username:username, password:password}
+    )
+  }
 }

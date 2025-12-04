@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const Login = require('../models/loginModel')
-const hash = require('object-hash')
 
 function validateUsername(username) {
     return true;
@@ -15,13 +14,18 @@ router.post('/register', async (req, res) => {
     try {
         const username = req.body["username"]
         const password = req.body["password"]
-        let hashed = hash(password)
         const existingUser = await Login.findOne({username})
-        console.log(existingUser)
-        if (existingUser)
-            throw new Error("user already exists")
-        const user = await Login.create({username, password:hashed})
+        if (existingUser) {
+            // user already exists
+            res.status(200).json({
+                "created": false,
+                "message": "user already exists"
+            })
+            return
+        }
+        const user = await Login.create({username, password})
         res.status(200).json({
+            "created": true,
             "message": "successfully created user"
         })
     } catch (error) {
@@ -34,13 +38,25 @@ router.get('/login', async (req, res) => {
     try {
         const username = req.body["username"]
         const password = req.body["password"]
-        let hashed = hash(password)
         const user = await Login.findOne({ username })
-        if (!user)
-            throw new Error("user does not exist")
-        if (user["password"] != hashed)
-            throw new Error("Incorrect password")
-        res.status(200).json(user)
+        if (!user) {
+            res.status(200).json({
+                "found": false,
+                "message": "user already exists"
+            })
+            return 
+        }
+        if (user["password"] != password) {
+            res.status(200).json({
+                "found": false,
+                "message": "user already exists"
+            })
+            return
+        }
+        res.status(200).json({
+            "found": true,
+            "username": username,
+        })
     } catch (error) {
         console.log(error.message)
         res.status(400).json({error: error.message})
