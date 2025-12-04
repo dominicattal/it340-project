@@ -14,6 +14,17 @@ const generateHash = (string: string) => {
   return hash.toString();
 };
 
+function validatePassword(password: string): boolean {
+  if (password.length < 8) {
+    return false;
+  }
+  let good = false;
+  for (let i = 0; i < password.length; i++)
+    if (password[i] == '%')
+      good = true;
+  return good;
+}
+
 @Component({
   selector: 'app-register',
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
@@ -30,6 +41,10 @@ export class Register {
   pass2 = ''
   output: any
   onSubmit() {
+    if (!validatePassword(this.pass)) {
+      this.output = "invalid password, must contain at least 8 characters and one special character"
+      return
+    }
     if (this.pass != this.pass2) {
       this.output = "passwords dont match"
       return
