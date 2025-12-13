@@ -10,10 +10,22 @@ export class Api {
   test() {
     return this.http.get(`${environment.apiUrl}/test`)
   }
-  registerUser(username: any, password: any) {
+  otpgen(user:any, email: any) {
+    return this.http.post(
+      `${environment.apiUrl}/otpgen`,
+      {user, email}
+    )
+  }
+  otpverify(user:any, otp: any) {
+    return this.http.post(
+      `${environment.apiUrl}/otpverify`,
+      {user, otp}
+    )
+  }
+  registerUser(username: any, email: any, password: any) {
     return this.http.post(
       `${environment.apiUrl}/register`,
-      {username, password}
+      {username, email, password}
     )
   }
   loginUser(username: any, password: any) {

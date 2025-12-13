@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, signal, WritableSignal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Api } from '../api';
 import { CookieService } from 'ngx-cookie-service';
@@ -37,9 +37,12 @@ export class Register {
     private cookieService : CookieService,
     private router : Router) {}
   name = ''
+  email = ''
   pass = ''
   pass2 = ''
   output: any
+  submitted: any
+  otp: any
   onSubmit() {
     if (!validatePassword(this.pass)) {
       this.output = "invalid password, must contain at least 8 characters and one special character"
@@ -49,17 +52,33 @@ export class Register {
       this.output = "passwords dont match"
       return
     }
-    this.api.registerUser(this.name, generateHash(this.pass)).subscribe({
+    this.api.otpgen(this.name, this.email).subscribe({
       next: (res: any) => {
-        console.log("response", res)
-        if (res["created"]) {
-          this.cookieService.set('loggedIn', 'true')
-          this.cookieService.set('username',this.name)
-          this.router.navigate(['/home'])
-        } else {
-          this.output = res["message"]
+        this.submitted = true;
+      }
+    })
+  }
+  onSubmit2fa() {
+    console.log("A")
+    this.api.otpverify(this.name, this.otp).subscribe({
+      next: (res: any) => {
+        console.log(res)
+        if (res["result"] == "success") {
+          this.api.registerUser(this.name, this.email, generateHash(this.pass)).subscribe({
+            next: (res: any) => {
+              console.log("response", res)
+              if (res["created"]) {
+                this.cookieService.set('loggedIn', 'true')
+                this.cookieService.set('username',this.name)
+                this.router.navigate(['/home'])
+              } else {
+                this.output = res["message"]
+              }
+            }
+          })
         }
       }
     })
+
   }
 }
