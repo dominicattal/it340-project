@@ -15,6 +15,7 @@ router.get('/test', async (req, res) => {
 router.post('/register', async (req, res) => {    
     try {
         const username = req.body["username"]
+        const email = req.body["email"]
         const password = req.body["password"]
         const existingUser = await Login.findOne({username})
         if (existingUser) {
@@ -25,7 +26,7 @@ router.post('/register', async (req, res) => {
             })
             return
         }
-        const user = await Login.create({username, password})
+        const user = await Login.create({username, email, password})
         res.status(200).json({
             "created": true,
             "message": "successfully created user"
@@ -59,6 +60,7 @@ router.post('/login', async (req, res) => {
             "found": true,
             "message": "success",
             "username": username,
+            "email": user["email"]
         })
     } catch (error) {
         console.log(error.message)
@@ -88,7 +90,6 @@ router.post('/otpgen', async (req, res) => {
             text: `${otp}`
         })
         otps[user] = otp;
-        console.log(otps)
         res.status(200).json({"message":"success"})
     } catch (error) {
         console.log(error.message)

@@ -25,9 +25,6 @@
           <div class="d-flex align-middle justify-content-center align-items-center pb-3">
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
-          <div class="text-center">
-          {{ output }}
-          </div>
         </form>
       } @else {
         <form #f="ngForm" (ngSubmit)="onSubmit2fa()">
@@ -40,6 +37,9 @@
           </div>
         </form>
       }
+      <div class="text-center">
+      {{ output }}
+      </div>
     </div>
   </div>
 </div>

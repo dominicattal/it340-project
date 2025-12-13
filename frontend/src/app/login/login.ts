@@ -28,16 +28,35 @@ constructor(private api : Api,
   name = ''
   pass = ''
   output: any
+  submitted: any
+  otp: any
   onSubmit() {
     this.api.loginUser(this.name, generateHash(this.pass)).subscribe({
       next: (res: any) => {
         console.log("response", res)
         if (res["found"]) {
+          this.api.otpgen(this.name, res["email"]).subscribe({
+            next: (res: any) => {
+              this.submitted = true;
+            }
+          })
+          this.submitted = true;
+        } else {
+          this.output = res["message"]
+        }
+      }
+    })
+  }
+  onSubmit2fa() {
+    this.api.otpverify(this.name, this.otp).subscribe({
+      next: (res: any) => {
+        console.log(res)
+        if (res["result"] == "success") {
           this.cookieService.set('loggedIn', 'true')
           this.cookieService.set('username', this.name)
           this.router.navigate(['/home'])
         } else {
-          this.output = res["message"]
+          this.output = "OTP failed";
         }
       }
     })

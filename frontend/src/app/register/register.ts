@@ -57,6 +57,7 @@ export class Register {
         this.submitted = true;
       }
     })
+    this.output = null;
   }
   onSubmit2fa() {
     console.log("A")
@@ -76,9 +77,10 @@ export class Register {
               }
             }
           })
+        } else {
+          this.output = "OTP failed";
         }
       }
     })
-
   }
 }

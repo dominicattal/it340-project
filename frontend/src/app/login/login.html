@@ -5,19 +5,31 @@
       <div class="card-header text-center">
         Login
       </div>
-      <form #f="ngForm" (ngSubmit)="onSubmit()">
-        <div class="mb-3 px-2 mt-2">
-          <label for="username" class="form-label">Username</label>
-          <input type="text" name="name" [(ngModel)]="name" class="form-control" id="username" aria-describedby="emailHelp">
-        </div>
-        <div class="mb-3 px-2">
-          <label for="password" class="form-label">Password</label>
-          <input type="password" name="pass" [(ngModel)]="pass" class="form-control" id="password">
-        </div>
-        <div class="d-flex align-middle justify-content-center align-items-center pb-3">
-          <a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page"><button type="submit" class="btn btn-primary">Submit</button></a>
-        </div>
-      </form>
+      @if (!submitted) {
+        <form #f="ngForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3 px-2 mt-2">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" name="name" [(ngModel)]="name" class="form-control" id="username" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3 px-2">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="pass" [(ngModel)]="pass" class="form-control" id="password">
+          </div>
+          <div class="d-flex align-middle justify-content-center align-items-center pb-3">
+            <a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page"><button type="submit" class="btn btn-primary">Submit</button></a>
+          </div>
+        </form>
+      } @else {
+        <form #f="ngForm" (ngSubmit)="onSubmit2fa()">
+          <div class="mb-3 px-2 mt-2">
+            <label for="otp" class="form-label">OTP</label>
+            <input type="text" name="otp" [(ngModel)]="otp" class="form-control" id="otp">
+          </div>
+          <div class="d-flex align-middle justify-content-center align-items-center pb-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      }
       <div class="text-center">
       {{ output }}
       </div>
