@@ -4,9 +4,8 @@
       <img src="img2.png" style="max-width: 10em; height: auto;">
     </a>
 
-    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
-      data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
-      aria-label="Toggle navigation">
+    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
+      aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
@@ -24,9 +23,9 @@
           <a class="nav-link active" href="tools">Tools</a>
         </li>
         @if (isLoggedIn) {
-          <li class="nav-item">
-            <a class="nav-link active" href="profile">Profile</a>
-          </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="profile">Profile</a>
+        </li>
         }
       </ul>
       <form class="d-flex my-2 my-lg-0">
@@ -36,19 +35,45 @@
         </button>
       </form>
       @if (!isLoggedIn) {
-        <button class="btn btn-outline-primary ms-3">
-          <a class="nav-link active" href="login">Login</a>
-        </button>
-        <button class="btn btn-outline-primary ms-3">
-          <a class="nav-link active" href="register">Register</a>
-        </button>
+      <button class="btn btn-outline-primary ms-3">
+        <a class="nav-link active" href="login">Login</a>
+      </button>
+      <button class="btn btn-outline-primary ms-3">
+        <a class="nav-link active" href="register">Register</a>
+      </button>
       } @else {
-        <button class="btn btn-outline-primary ms-3">
-          <a class="nav-link active" href="logout">Logout</a>
-        </button>
+      <button class="btn btn-outline-primary ms-3">
+        <a class="nav-link active" href="logout">Logout</a>
+      </button>
       }
     </div>
   </div>
 </nav>
 
+
+
 <router-outlet />
+
+<footer class="bg-dark text-light border-top border-dark">
+  <div class="container">
+    <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
+
+      <p class="col-md-4 mb-0 text-light">© 2025 Laplace's Box, Inc</p>
+
+      <a href="/"
+        class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
+        aria-label="Bootstrap">
+        <svg class="bi me-2" width="40" height="32" aria-hidden="true">
+          <use xlink:href="#bootstrap"></use>
+        </svg>
+      </a>
+      <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-light">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-light">Features</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-light">Pricing</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-light">FAQs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-light">About</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
