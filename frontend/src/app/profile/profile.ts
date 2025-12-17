@@ -19,7 +19,7 @@ export class Profile {
   mobile: any;
   address: any;
   ngAfterContentInit() {
-    if (!this.cookieService.get('isLoggedIn')) {
+    if (!this.cookieService.get('loggedIn')) {
       this.router.navigate(['/home'])
     }
     const name = this.cookieService.get('username');
