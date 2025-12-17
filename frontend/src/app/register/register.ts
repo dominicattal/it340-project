@@ -15,13 +15,12 @@ const generateHash = (string: string) => {
 };
 
 function validatePassword(password: string): boolean {
-  return true;
   if (password.length < 8) {
     return false;
   }
   let good = false;
   for (let i = 0; i < password.length; i++)
-    if (password[i] == '%')
+    if (password[i] == '%' || password[i] == '!' || password[i] == '@' || password[i] == '#' || password[i] == '$' || password[i] == '^' || password[i] == '&' || password[i] == '*' || password[i] == '(' || password[i] == ')' || password[i] == '-' || password[i] == '+' )
       good = true;
   return good;
 }
