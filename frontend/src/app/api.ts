@@ -34,4 +34,10 @@ export class Api {
       {username, password}
     )
   }
+  profileUser(username: any) {
+    return this.http.post(
+      `${environment.apiUrl}/profile`,
+      {username}
+    )
+  }
 }

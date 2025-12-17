@@ -68,14 +68,42 @@ router.post('/login', async (req, res) => {
     }
 })
 
+router.post("/profile", async (req, res) => {
+    try {
+        const username = req.body["username"];
+        const user = await Login.findOne({username})
+        if (!user) {
+            res.status(200).json({
+                "found": false,
+                "message": "user not found"
+            })
+            return 
+        }
+        res.status(200).json({
+            "found": true,
+            "message": "success",
+            "username": username,
+            "email": user["email"],
+            "mobile": user["mobile"],
+            "phone": user["phone"],
+            "address": user["address"]
+        })
+    } catch (error) {
+        console.log(error.message)
+        res.status(400).json({error: error.message})
+    }
+})
+
 otps = {}
 
 router.post('/otpgen', async (req, res) => {
+    console.log(req.body)
     try {
-        const email = req.body["email"];
         const user = req.body["user"];
+        const email = req.body["email"];
         const otp = Math.floor(Math.random() * 900000) + 100000;
-        const transporter = nodemailer.createTransport({
+        // uncomment for demo, dont waste mailtrap emails
+        /* const transporter = nodemailer.createTransport({
             host: "sandbox.smtp.mailtrap.io",
             port: 587,
             auth: {
@@ -88,8 +116,9 @@ router.post('/otpgen', async (req, res) => {
             to: email,
             subject: 'Your 2FA code',
             text: `${otp}`
-        })
+        }) */
         otps[user] = otp;
+        console.log(otp)
         res.status(200).json({"message":"success"})
     } catch (error) {
         console.log(error.message)
@@ -113,6 +142,7 @@ router.post('/otpverify', async(req, res) => {
             return;
         }
         if (otp_test == otp_real) {
+            delete otps[user];
             res.status(200).json({"result": "success"});
         } else {
             res.status(200).json({"result": "fail3"});
