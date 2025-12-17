@@ -40,4 +40,10 @@ export class Api {
       {username}
     )
   }
+  getModels(grade: any, from: any, to: any) {
+    return this.http.post(
+      `${environment.apiUrl}/models`,
+      {grade, from, to}
+    )
+  }
 }

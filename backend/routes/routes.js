@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const nodemailer = require('nodemailer');
 const Login = require('../models/loginModel')
+const Gundam = require('../models/gundamModel.js')
 
 function validateUsername(username) {
     return true;
@@ -152,4 +153,18 @@ router.post('/otpverify', async(req, res) => {
         res.status(400).json({error: error.message})
     }
 })
+
+router.post('/models', async (req, res) => {
+    try {
+        const grade = req.body["grade"];
+        const from = req.body["from"];
+        const to = req.body["to"];
+        const models = await Gundam.find({"grade": grade}).skip(from).limit(to-from)
+        res.status(200).json(models)
+    } catch (error) {
+        console.log(error.message)
+        res.status(400).json({error: error.message})
+    }
+})
+
 module.exports = router 
