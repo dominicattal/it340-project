@@ -8,40 +8,51 @@
       </svg> <span class="fs-4">Grades</span> </a>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item"> <a href="#" class="nav-link active" aria-current="page"> <svg class="bi pe-none me-2"
-            width="16" height="16" aria-hidden="true">
+      <li class="nav-item">
+        <a href="#" class="nav-link" [class.active]="grade === 'EG'" (click)="$event.preventDefault(); setGrade('EG')" aria-current="page">
+          <svg class="bi pe-none me-2" width="16" height="16" aria-hidden="true">
             <use xlink:href="#home"></use>
           </svg>
-          Entry Grade
-        </a> </li>
-      <li> <a href="#" class="nav-link text-white"> <svg class="bi pe-none me-2" width="16" height="16"
-            aria-hidden="true">
-            <use xlink:href="../kits/kits.html"></use>
+          Entry Grade ({{ getKitCount('EG') }})
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white" [class.active]="grade === 'HG'" (click)="$event.preventDefault(); setGrade('HG')">
+          <svg class="bi pe-none me-2" width="16" height="16" aria-hidden="true">
+            <use xlink:href="#speedometer2"></use>
           </svg>
-          High Grade
-        </a> </li>
-      <li> <a href="#" class="nav-link text-white"> <svg class="bi pe-none me-2" width="16" height="16"
-            aria-hidden="true">
+          High Grade ({{ getKitCount('HG') }})
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white" [class.active]="grade === 'RG'" (click)="$event.preventDefault(); setGrade('RG')">
+          <svg class="bi pe-none me-2" width="16" height="16" aria-hidden="true">
             <use xlink:href="#table"></use>
           </svg>
-          Real Grade
-        </a> </li>
-      <li> <a href="#" class="nav-link text-white"> <svg class="bi pe-none me-2" width="16" height="16"
-            aria-hidden="true">
+          Real Grade ({{ getKitCount('RG') }})
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white" [class.active]="grade === 'MG'" (click)="$event.preventDefault(); setGrade('MG')">
+          <svg class="bi pe-none me-2" width="16" height="16" aria-hidden="true">
             <use xlink:href="#grid"></use>
           </svg>
-          Master Grade
-        </a> </li>
-      <li> <a href="#" class="nav-link text-white"> <svg class="bi pe-none me-2" width="16" height="16"
-            aria-hidden="true">
+          Master Grade ({{ getKitCount('MG') }})
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white" [class.active]="grade === 'PG'" (click)="$event.preventDefault(); setGrade('PG')">
+          <svg class="bi pe-none me-2" width="16" height="16" aria-hidden="true">
             <use xlink:href="#people-circle"></use>
           </svg>
-          Perfect Grade
-        </a> </li>
+          Perfect Grade ({{ getKitCount('PG') }})
+        </a>
+      </li>
     </ul>
 
   </div>
   <div class="cards flex-grow-1 p-4 text-bg-dark">
+    <h2 class="mb-4">{{ currentGradeName }} Model Kits</h2>
     <div class="row row-cols-1 row-cols-md-4 g-4">
       <!-- Card 1 -->
       @for (model of models; track model) {
