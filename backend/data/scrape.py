@@ -21,7 +21,7 @@ def newtype():
         ("newtype-pg.html", "PG")
     ]
     base_url = "https://newtype.us"
-    store = "New Type"
+    store = "Newtype"
     for filename, grade in files:
         with open(filename, "r", encoding="utf8") as txtfile:
             html_doc = txtfile.read()
