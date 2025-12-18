@@ -155,8 +155,23 @@ router.post('/models', async (req, res) => {
         const grade = req.body["grade"];
         const from = req.body["from"];
         const to = req.body["to"];
-        const models = await Gundam.find({"grade": grade}).skip(from).limit(to-from)
-        res.status(200).json(models)
+
+        // Load combined data from JSON file
+        const fs = require('fs');
+        const path = require('path');
+        const combinedDataPath = path.join(__dirname, '../data/combined_price_data.json');
+
+        if (!fs.existsSync(combinedDataPath)) {
+            return res.status(404).json({error: "Combined data file not found"});
+        }
+
+        const combinedData = JSON.parse(fs.readFileSync(combinedDataPath, 'utf8'));
+        const models = combinedData.models.filter(model => model.grade === grade);
+
+        // Apply pagination
+        const paginatedModels = models.slice(from, to);
+
+        res.status(200).json(paginatedModels)
     } catch (error) {
         console.log(error.message)
         res.status(400).json({error: error.message})
