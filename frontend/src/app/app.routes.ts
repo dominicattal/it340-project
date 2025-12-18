@@ -6,6 +6,7 @@ import { Test } from './test/test';
 import { Kits } from './kits/kits';
 import { Profile } from './profile/profile';
 import { Logout } from './logout/logout';
+import { Bookmarks } from './bookmarks/bookmarks';
 
 
 export const routes: Routes = [
@@ -37,6 +38,10 @@ export const routes: Routes = [
     {
         path: 'profile',
         component: Profile
+    },
+    {
+        path: 'bookmarks',
+        component: Bookmarks
     },
     {
         path: 'logout',

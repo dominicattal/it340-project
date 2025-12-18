@@ -80,6 +80,7 @@ def gundamplanet():
                 try:
                     link = model.find("a", class_="product-detail-link")["href"]
                     name = model.find("div", class_="preview-card-hovertext-title").text.replace("\n", " ").strip()
+                    name = name.replace("\"", "\\\"")
                     img_link = model.find("img")["src"]
                     price_str = model.find("span", class_="price-item").text.strip()
                     price = float(price_str[price_str.index("$")+1:])

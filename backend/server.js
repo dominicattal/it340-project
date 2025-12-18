@@ -17,10 +17,11 @@ app.use((req, res, next)=> {
 })
 
 async function updateDB() {
+    return
     models = data["models"];
     for (let i = 0; i < models.length-1; i++) {
         let model = models[i];
-        const existingModel = await Gundam.findOne({"name":model["name"]})
+        const existingModel = await Gundam.findOne({"img":model["name"]})
         if (existingModel) {
             continue;
         }

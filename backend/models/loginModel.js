@@ -22,6 +22,9 @@ const loginSchema = new Schema({
     },
     address: {
         type: String
+    },
+    bookmarks: {
+        type: Array
     }
 })
 

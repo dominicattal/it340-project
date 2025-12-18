@@ -46,4 +46,28 @@ export class Api {
       {grade, from, to}
     )
   }
+  bookmarkAdd(username: any, name: any) {
+    return this.http.post(
+      `${environment.apiUrl}/bookmarkadd`,
+      {username, name}
+    )
+  }
+  bookmarkRemove(username: any, name: any) {
+    return this.http.post(
+      `${environment.apiUrl}/bookmarkremove`,
+      {username, name}
+    )
+  }
+  bookmarkRemoveAll(username: any) {
+    return this.http.post(
+      `${environment.apiUrl}/bookmarkremoveall`,
+      {username, name}
+    )
+  }
+  bookmarkGetAll(username: any) {
+    return this.http.post(
+      `${environment.apiUrl}/bookmarks`,
+      {username, name}
+    )
+  }
 }

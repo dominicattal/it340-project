@@ -178,18 +178,63 @@ router.post('/models', async (req, res) => {
     }
 })
 
-router.post('/cartadd', async(req, res) => {
+router.post('/bookmarkadd', async(req, res) => {
     try {
-        Login.findOneAndUpdate(
-            { username: req["username"] },
-            { $push: { cart: req["name"] }},
-        );
-        const user = await Login.find({"username":req["username"]})
-        console.log(user.cart)
+        const user = await Login.findOne({"username":req.body["username"]})
+        user.bookmarks.push(req.body["name"])
+        user.save()
         res.status(200).json({"message": "success"})
     } catch (error) {
         console.log(error.message)
         res.status(400).json({error: error.message})
+    }
+})
+
+router.post('/bookmarkremove', async (req, res) => {
+    try {
+        const user = await Login.findOne({"username":req.body["username"]})
+        const idx = user.bookmarks.indexOf(req.body["name"])
+        user.bookmarks.splice(idx, 1)
+        user.save()
+        res.status(200).json({"message": "success"})
+    } catch (error) {
+        console.log(error.message);
+        res.status(400).json({error: error.message});
+    }
+})
+
+router.post('/bookmarkremoveall', async (req, res) => {
+    try {
+        const user = await Login.findOne({"username":req.body["username"]})
+        user.bookmarks = []
+        user.save()
+        res.status(200).json({"message": "success"})
+    } catch (error) {
+        console.log(error.message);
+        res.status(400).json({error: error.message});
+    }
+})
+
+router.post('/bookmarks', async (req, res) => {
+    try {
+        const user = await Login.findOne({"username": req.body["username"]})
+        let models = []
+        const all = await Gundam.find();
+        for await (const name of user.bookmarks) {
+            const model = await Gundam.findOne({"name": name})
+            if (model == null)
+                continue;
+            models.push({
+                "grade": model.grade,
+                "name": model.name,
+                "img": model.img,
+                "price": model.price
+            })
+        }
+        res.status(200).json(models)
+    } catch (error) {
+        console.log(error.message);
+        res.status(400).json({error: error.message});
     }
 })
 

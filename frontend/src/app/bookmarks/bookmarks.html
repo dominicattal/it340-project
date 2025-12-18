@@ -1,0 +1,18 @@
+<div class="d-flex text-bg-dark">
+  <div class="cards flex-grow-1 p-4 text-bg-dark">
+    <h2 class="mb-4">Bookmarks</h2>
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      <!-- Card 1 -->
+      @for (model of models; track model) {
+      <div class="col">
+        <div class="card" style="cursor: pointer;">
+          <img [src]="model.img" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">{{model.name}}</h5>
+            <h5 class="card-body">${{model.price}}</h5>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+</div>
