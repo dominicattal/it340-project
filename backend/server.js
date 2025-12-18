@@ -17,6 +17,7 @@ app.use((req, res, next)=> {
 })
 
 async function updateDB() {
+    return
     models = data["models"];
     for (let i = 0; i < models.length-1; i++) {
         let model = models[i];

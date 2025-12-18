@@ -17,6 +17,5 @@ export class App {
   isLoggedIn: any
   ngAfterContentChecked() {
     this.isLoggedIn = this.cookieService.get('loggedIn')
-    console.log(this.isLoggedIn)
   }
 }
