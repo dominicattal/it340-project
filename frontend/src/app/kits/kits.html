@@ -92,7 +92,9 @@
                       </div>
                       <span class="badge bg-primary rounded-pill">${{store.price}}</span>
                     </a>
-                    <button (click)="bookmarkToggle(store.url, idx)">{{store.bookmarked === true ? 'O' : 'X'}}</button>
+                    @if (isLoggedIn) {
+                      <button (click)="bookmarkToggle(store.url, idx)">{{store.bookmarked === true ? 'O' : 'X'}}</button>
+                    }
                   </div>
                   }
                 </div>

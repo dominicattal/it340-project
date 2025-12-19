@@ -169,13 +169,16 @@ router.post('/models', async (req, res) => {
         const combinedData = JSON.parse(fs.readFileSync(combinedDataPath, 'utf8'));
         const models = combinedData.models.filter(model => model.grade === grade);
         const user = await Login.findOne({"username": username});
-        for (let i = 0; i < models.length; i++) {
-            const model = models[i];
-            for (let j = 0; j < model.stores.length; j++) {
-                const idx = user.bookmarks.indexOf(model.stores[j].url);
-                model.stores[j]["bookmarked"] = idx >= 0
+        if (user) {
+            for (let i = 0; i < models.length; i++) {
+                const model = models[i];
+                for (let j = 0; j < model.stores.length; j++) {
+                    const idx = user.bookmarks.indexOf(model.stores[j].url);
+                    model.stores[j]["bookmarked"] = idx >= 0
+                }
             }
         }
+        
 
         // Apply pagination
         const paginatedModels = models.slice(from, to);

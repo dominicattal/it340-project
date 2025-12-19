@@ -18,6 +18,7 @@ export class Kits implements OnInit {
   models: any;
   selectedModel: any = null;
   changed: any;
+  isLoggedIn: any;
 
   // Display names for grades
   gradeNames: { [key: string]: string } = {
@@ -46,6 +47,7 @@ export class Kits implements OnInit {
   }
 
   ngOnInit() {
+    this.isLoggedIn = this.cookieService.get('loggedIn');
     // Read grade from query parameters
     this.route.queryParams.subscribe(params => {
       this.grade = params['grade'] || 'EG';
@@ -80,6 +82,8 @@ export class Kits implements OnInit {
   }
 
   bookmarkToggle(url: any, idx: any) {
+    if (!this.isLoggedIn)
+      return;
     this.api.bookmarkToggle(this.cookieService.get('username'), url).subscribe({
       next: (res: any) => {
         this.models[idx].bookmarked = !this.models[idx].bookmarked;
