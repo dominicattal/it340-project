@@ -7,7 +7,7 @@
         <div class="card" style="cursor: pointer;">
           <img [src]="model.img" class="card-img-top">
           <div class="card-body">
-            <h5 class="card-title">{{model.name}}</h5>
+            <a class="card-title" [href]="model.url" target="_blank">{{model.name}}</a>
             <h5 class="card-body">${{model.price}}</h5>
             <button (click)="removeBookmark(model.url)">X</button>
           </div>
