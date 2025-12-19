@@ -30,6 +30,7 @@ async function updateDB() {
             "name": model["name"],
             "img": model["img"],
             "price": model["price"],
+            "url": model["link"]
         })
     }
 }

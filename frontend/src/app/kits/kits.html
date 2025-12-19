@@ -84,14 +84,16 @@
                 <h4 class="text-success mb-3">Best Price: ${{selectedModel?.lowestPrice}} at {{selectedModel?.lowestStore}}</h4>
                 <h5>All Available Prices:</h5>
                 <div class="list-group">
-                  @for (store of selectedModel?.stores; track store) {
-                  <a href="{{store.url}}" target="_blank" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center bg-secondary text-white">
-                    <div>
-                      <strong>{{store.name}}</strong>
-                      
-                    </div>
-                    <span class="badge bg-primary rounded-pill">${{store.price}}</span>
-                  </a>
+                  @for (store of selectedModel?.stores; track store; let idx = $index) {
+                  <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center bg-secondary text-white">
+                    <a href="{{store.url}}" target="_blank" class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <strong>{{store.name}}</strong>
+                      </div>
+                      <span class="badge bg-primary rounded-pill">${{store.price}}</span>
+                    </a>
+                    <button (click)="bookmarkToggle(store.url, idx)">{{store.bookmarked === true ? 'O' : 'X'}}</button>
+                  </div>
                   }
                 </div>
               </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Api } from '../api';
 import { DatePipe } from '@angular/common';
+import { CookieService } from 'ngx-cookie-service';
 
 declare var bootstrap: any; // Declare Bootstrap
 
@@ -12,10 +13,11 @@ declare var bootstrap: any; // Declare Bootstrap
   styleUrl: './kits.css',
 })
 export class Kits implements OnInit {
-  constructor(private api: Api, private route: ActivatedRoute, private router: Router) {}
+  constructor(private api: Api, private route: ActivatedRoute, private router: Router, private cookieService: CookieService) {}
   grade: string = "EG";
   models: any;
   selectedModel: any = null;
+  changed: any;
 
   // Display names for grades
   gradeNames: { [key: string]: string } = {
@@ -56,7 +58,7 @@ export class Kits implements OnInit {
     const limits = { 'EG': 98, 'HG': 769, 'RG': 61, 'MG': 194, 'PG': 26 };
     const limit = limits[this.grade as keyof typeof limits] || 100;
 
-    this.api.getModels(this.grade, 0, limit).subscribe({
+    this.api.getModels(this.cookieService.get('username'), this.grade, 0, limit).subscribe({
       next: (res: any) => {
         this.models = res;
       }
@@ -75,5 +77,14 @@ export class Kits implements OnInit {
       const modal = new bootstrap.Modal(modalElement);
       modal.show();
     }
+  }
+
+  bookmarkToggle(url: any, idx: any) {
+    this.api.bookmarkToggle(this.cookieService.get('username'), url).subscribe({
+      next: (res: any) => {
+        this.models[idx].bookmarked = !this.models[idx].bookmarked;
+        console.log(url, idx)
+      }
+    })
   }
 }

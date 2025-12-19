@@ -22,8 +22,20 @@ export class Bookmarks {
     this.api.bookmarkGetAll(name).subscribe({
       next: (res: any) => {
         this.models = res;
-        console.log(this.models)
       }
     })
+  }
+  removeBookmark(url: any) {
+    var idx: any;
+    this.api.bookmarkRemove(this.cookieService.get('username'), url).subscribe({
+      next: (res: any) => {
+        for (idx = 0; idx < this.models.length; idx++) {
+          if (this.models[idx].url === url) {
+            this.models.splice(idx, 1)
+            break
+          }
+        }
+      }
+    });
   }
 }

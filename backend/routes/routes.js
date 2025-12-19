@@ -152,6 +152,7 @@ router.post('/otpverify', async(req, res) => {
 
 router.post('/models', async (req, res) => {
     try {
+        const username = req.body["username"];
         const grade = req.body["grade"];
         const from = req.body["from"];
         const to = req.body["to"];
@@ -167,6 +168,14 @@ router.post('/models', async (req, res) => {
 
         const combinedData = JSON.parse(fs.readFileSync(combinedDataPath, 'utf8'));
         const models = combinedData.models.filter(model => model.grade === grade);
+        const user = await Login.findOne({"username": username});
+        for (let i = 0; i < models.length; i++) {
+            const model = models[i];
+            for (let j = 0; j < model.stores.length; j++) {
+                const idx = user.bookmarks.indexOf(model.stores[j].url);
+                model.stores[j]["bookmarked"] = idx >= 0
+            }
+        }
 
         // Apply pagination
         const paginatedModels = models.slice(from, to);
@@ -181,7 +190,7 @@ router.post('/models', async (req, res) => {
 router.post('/bookmarkadd', async(req, res) => {
     try {
         const user = await Login.findOne({"username":req.body["username"]})
-        user.bookmarks.push(req.body["name"])
+        user.bookmarks.push(req.body["url"])
         user.save()
         res.status(200).json({"message": "success"})
     } catch (error) {
@@ -193,8 +202,25 @@ router.post('/bookmarkadd', async(req, res) => {
 router.post('/bookmarkremove', async (req, res) => {
     try {
         const user = await Login.findOne({"username":req.body["username"]})
-        const idx = user.bookmarks.indexOf(req.body["name"])
+        const idx = user.bookmarks.indexOf(req.body["url"])
         user.bookmarks.splice(idx, 1)
+        user.save()
+        res.status(200).json({"message": "success"})
+    } catch (error) {
+        console.log(error.message);
+        res.status(400).json({error: error.message});
+    }
+})
+
+router.post('/bookmarktoggle', async (req, res) => {
+    try {
+        const user = await Login.findOne({"username":req.body["username"]})
+        const url = req.body["url"];
+        const idx = user.bookmarks.indexOf(req.body["url"])
+        if (idx >= 0)
+            user.bookmarks.splice(idx, 1)
+        else
+            user.bookmarks.push(url)
         user.save()
         res.status(200).json({"message": "success"})
     } catch (error) {
@@ -220,15 +246,16 @@ router.post('/bookmarks', async (req, res) => {
         const user = await Login.findOne({"username": req.body["username"]})
         let models = []
         const all = await Gundam.find();
-        for await (const name of user.bookmarks) {
-            const model = await Gundam.findOne({"name": name})
+        for await (const url of user.bookmarks) {
+            const model = await Gundam.findOne({"url": url})
             if (model == null)
                 continue;
             models.push({
                 "grade": model.grade,
                 "name": model.name,
                 "img": model.img,
-                "price": model.price
+                "price": model.price,
+                "url": model.url
             })
         }
         res.status(200).json(models)

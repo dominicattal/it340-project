@@ -40,34 +40,40 @@ export class Api {
       {username}
     )
   }
-  getModels(grade: any, from: any, to: any) {
+  getModels(username: any, grade: any, from: any, to: any) {
     return this.http.post(
       `${environment.apiUrl}/models`,
-      {grade, from, to}
+      {username, grade, from, to}
     )
   }
-  bookmarkAdd(username: any, name: any) {
+  bookmarkAdd(username: any, url: any) {
     return this.http.post(
       `${environment.apiUrl}/bookmarkadd`,
-      {username, name}
+      {username, url}
     )
   }
-  bookmarkRemove(username: any, name: any) {
+  bookmarkRemove(username: any, url: any) {
     return this.http.post(
       `${environment.apiUrl}/bookmarkremove`,
-      {username, name}
+      {username, url}
     )
   }
   bookmarkRemoveAll(username: any) {
     return this.http.post(
       `${environment.apiUrl}/bookmarkremoveall`,
-      {username, name}
+      {username}
     )
   }
   bookmarkGetAll(username: any) {
     return this.http.post(
       `${environment.apiUrl}/bookmarks`,
-      {username, name}
+      {username}
+    )
+  }
+  bookmarkToggle(username: any, url: any) {
+    return this.http.post(
+      `${environment.apiUrl}/bookmarktoggle`,
+      {username, url}
     )
   }
 }
